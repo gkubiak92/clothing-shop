@@ -3,7 +3,7 @@ import React from "react";
 import "./menu-item.style.scss";
 import { withRouter } from "react-router-dom";
 
-export default withRouter(function MenuItem({
+const MenuItem = ({
   title,
   subtitle,
   imageUrl,
@@ -11,7 +11,7 @@ export default withRouter(function MenuItem({
   linkUrl,
   match,
   history,
-}) {
+}) => {
   return (
     <div className={`${size} menu-item`}>
       <div
@@ -27,4 +27,6 @@ export default withRouter(function MenuItem({
       </div>
     </div>
   );
-});
+};
+
+export default withRouter(MenuItem);
