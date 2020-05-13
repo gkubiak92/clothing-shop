@@ -9,6 +9,7 @@ import {
 
 import "./checkout.styles.scss";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
+import StripeCheckoutButton from "../../components/stripe-button/stripe-button.component";
 
 const checkoutPage = ({ cartItems, cartItemsTotalPrice }) => (
   <div className="checkout-page">
@@ -35,6 +36,10 @@ const checkoutPage = ({ cartItems, cartItemsTotalPrice }) => (
     <div className="total">
       <span>TOTAL: ${cartItemsTotalPrice}</span>
     </div>
+    <StripeCheckoutButton
+      price={cartItemsTotalPrice}
+      className="stripe-button"
+    />
   </div>
 );
 

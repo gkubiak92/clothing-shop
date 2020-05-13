@@ -1,9 +1,9 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import config from "../data/api-config";
+import { firebaseApiConfig } from "../data/api-config";
 
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseApiConfig);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
