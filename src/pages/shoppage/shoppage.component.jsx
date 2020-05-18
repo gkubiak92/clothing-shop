@@ -7,7 +7,7 @@ import { createStructuredSelector } from "reselect";
 import { fetchCollectionsStartAsync } from "../../redux/shop/shop.actions";
 import WithSpinner from "../../components/with-spinner/with-spinner.component";
 import {
-  selectShopIsFetching,
+  selectIsCollectionFetching,
   selectIsCollectionLoaded,
 } from "../../redux/shop/shop.selectors";
 
@@ -22,6 +22,11 @@ class ShopPage extends Component {
 
   render() {
     const { match, isFetching, isCollectionsLoaded } = this.props;
+    if (isFetching) {
+      console.log("FETCHINK GKURWA");
+    } else {
+      console.log("NIEFETCHING KUGRWA");
+    }
     return (
       <div className="shop-page">
         <Route
@@ -46,7 +51,7 @@ class ShopPage extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  isFetching: selectShopIsFetching,
+  isFetching: selectIsCollectionFetching,
   isCollectionsLoaded: selectIsCollectionLoaded,
 });
 
