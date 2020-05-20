@@ -10,8 +10,6 @@ import {
 } from "./shop.actions";
 
 export function* fetchCollectionsAsync() {
-  yield console.log("fetch collections fired");
-
   try {
     const collectionRef = firestore.collection("collections");
     const snapshot = yield collectionRef.get();
