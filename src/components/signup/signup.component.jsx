@@ -30,7 +30,7 @@ class SignUp extends Component {
     }
 
     try {
-      signUpStart(email, password, displayName);
+      signUpStart({ email, password, displayName });
 
       this.setState({
         displayName: "",
@@ -97,8 +97,7 @@ class SignUp extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  signUpStart: (email, password, displayName) =>
-    dispatch(signUpStart({ email, password, displayName })),
+  signUpStart: (userCredentials) => dispatch(signUpStart(userCredentials)),
 });
 
 export default connect(null, mapDispatchToProps)(SignUp);

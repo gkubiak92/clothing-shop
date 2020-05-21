@@ -15,9 +15,13 @@ import {
   getCurrentUser,
 } from "../../firebase/firebase.utils";
 
-export function* getSnapshotFromUserAuth(userAuth) {
+export function* getSnapshotFromUserAuth(userAuth, additionalData) {
   try {
-    const userRef = yield call(createUserProfileDocument, userAuth);
+    const userRef = yield call(
+      createUserProfileDocument,
+      userAuth,
+      additionalData
+    );
     const userSnapshot = yield userRef.get();
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
@@ -27,7 +31,6 @@ export function* getSnapshotFromUserAuth(userAuth) {
 
 export function* signInWithGoogle() {
   try {
-    //destructuring user object from retrieved signin object
     const { user } = yield auth.signInWithPopup(googleProvider);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
@@ -82,8 +85,7 @@ export function* onSignOut() {
 export function* signUpUser({ payload: { email, password, displayName } }) {
   try {
     const { user } = yield auth.createUserWithEmailAndPassword(email, password);
-    yield createUserProfileDocument(user, { displayName });
-    yield put(signUpSuccess());
+    yield put(signUpSuccess(user, { displayName }));
   } catch (error) {
     yield put(signUpFailure(error));
   }
@@ -93,6 +95,14 @@ export function* onSignUp() {
   yield takeLatest(UserActionTypes.SIGN_UP_START, signUpUser);
 }
 
+export function* signInAfterSignUp({ payload: { user, additionalData } }) {
+  yield getSnapshotFromUserAuth(user, additionalData);
+}
+
+export function* onSignUpSuccess() {
+  yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
+}
+
 export function* userSagas() {
   yield all([
     call(onGoogleSignInStart),
@@ -100,5 +110,6 @@ export function* userSagas() {
     call(onCheckUserSession),
     call(onSignOut),
     call(onSignUp),
+    call(onSignUpSuccess),
   ]);
 }
