@@ -23,12 +23,6 @@ class SignIn extends Component {
     const { emailSignInStart } = this.props;
     const { email, password } = this.state;
     emailSignInStart(email, password);
-    // const { email, password } = this.state;
-    // try {
-    //   await auth.signInWithEmailAndPassword(email, password);
-    // } catch (error) {
-    //   console.error(error);
-    // }
 
     this.setState({ email: "", password: "" });
   };
